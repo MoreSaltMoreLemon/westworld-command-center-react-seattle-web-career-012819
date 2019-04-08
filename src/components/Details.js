@@ -1,17 +1,26 @@
 import React from 'react'
 import { Segment, Image } from 'semantic-ui-react'
+
+import HostInfo from './HostInfo.js'
 import * as Images from '../services/Images'
 
 
-const Details = () => {
-  // We'll render the logo if no host is selected. But if a host does get selected....
-  // Watch the video to see how this works in the app.
+const Details = ({areas, selectedHost, moveHost, toggleHostActive}) => {
+  const showSplash = selectedHost ? false : true
 
-  const renderSomething = () => (<Image size='medium' src={Images.westworldLogo}/>)
+  const renderSplash = () => (<Image size='medium' src={Images.westworldLogo}/>)
 
   return(
     <Segment id="details" className="HQComps">
-      {renderSomething()}
+      {showSplash ?
+        renderSplash() :
+        <HostInfo 
+          selectedHost={selectedHost} 
+          areas={areas}
+          moveHost={moveHost}
+          toggleHostActive={toggleHostActive}
+        />
+      }
     </Segment>
   )
 }

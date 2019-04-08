@@ -1,16 +1,36 @@
 import React from 'react';
+import Host from './Host.js'
+import HostList from './HostList.js'
+
 import '../stylesheets/Area.css'
 
-const Area = () => (
+const Area = ({area, hosts, selectHost}) => {
+  const hostCards = hosts
+      .filter(host => 
+        host.area === area.name 
+        && host.active
+      )
+      .map(host => 
+        <Host 
+          key={host.name} 
+          host={host}
+          selectHost={selectHost} 
+        />)  
 
-  <div className='area' id={/* Pass in the area name here to make sure this is styled correctly */}>
-    <h3 className='labels'>{/* Don't just pass in the name from the data...clean that thing up */}</h3>
+  const name = area.name
+                .split(' ')
+                .map(word => {
+                  return word[0].toUpperCase() + word.slice(1)
+                })
+                .join(' ')
 
-    {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
-
-  </div>
-
-)
+  return (
+    <div className='area' id={area.name}>
+      <h3 className='labels'>{name}</h3>
+      <HostList hosts={hostCards} />
+    </div>
+  )
+}
 
 Area.propTypes = {
   hosts: function(props, propName, componentName){
@@ -23,3 +43,11 @@ Area.propTypes = {
 }
 
 export default Area;
+
+
+// Area : {
+// auth_req: false
+// id: 6
+// limit: 10
+// name: "badlands"
+// }
